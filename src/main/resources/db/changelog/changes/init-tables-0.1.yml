@@ -1,0 +1,534 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: betrayal
+      changes:
+        - createTable:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  autoIncrement: true
+                  type: SMALLINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+                    unique: true
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  autoIncrement: true
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: login
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password
+                  type: VARCHAR(150)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: SMALLINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_users_roles
+                    references: roles(id)
+        - createTable:
+            tableName: counterparty_types
+            columns:
+              - column:
+                  name: id
+                  autoIncrement: true
+                  type: SMALLINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+                    unique: true
+        - createTable:
+            tableName: countries
+            columns:
+              - column:
+                  name: id
+                  autoIncrement: true
+                  type: SMALLINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: regions
+            columns:
+              - column:
+                  name: id
+                  autoIncrement: true
+                  type: INT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: country_id
+                  type: SMALLINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_regions_countries
+                    references: countries(id)
+        - createTable:
+            tableName: areas
+            columns:
+              - column:
+                  name: id
+                  autoIncrement: true
+                  type: INT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: region_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_areas_regions
+                    references: regions(id)
+        - createTable:
+            tableName: cities
+            columns:
+              - column:
+                  name: id
+                  autoIncrement: true
+                  type: INT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: area_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_cities_areas
+                    references: areas(id)
+        - createTable:
+            tableName: streets
+            columns:
+              - column:
+                  name: id
+                  autoIncrement: true
+                  type: INT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: cities_streets
+            columns:
+              - column:
+                  name: id
+                  autoIncrement: true
+                  type: INT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: city_id
+                  type: INT
+                  constraints:
+                    foreignKeyName: fk_cities_streets_cities
+                    references: cities(id)
+                    nullable: false
+              - column:
+                  name: street_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_cities_streets_streets
+                    references: streets(id)
+              - column:
+                  name: index
+                  type: VARCHAR(6)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: addresses
+            columns:
+              - column:
+                  name: id
+                  autoIncrement: true
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: city_street_id
+                  type: INT
+                  constraints:
+                    foreignKeyName: fk_addresses_cities_streets
+                    references: cities_streets(id)
+                    nullable: false
+              - column:
+                  name: house_number
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: corpus
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: entrance
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: apartment
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: banks
+            columns:
+              - column:
+                  name: id
+                  autoIncrement: true
+                  type: SMALLINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: counterparties
+            columns:
+              - column:
+                  name: id
+                  autoIncrement: true
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: address_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_addresses_counterparties
+                    references: addresses(id)
+              - column:
+                  name: inn
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: kpp
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ogrn
+                  type: VARCHAR(15)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: bank_id
+                  type: SMALLINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: correspondent_account
+                  type: VARCHAR(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: bik
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: VARCHAR(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type_id
+                  type: SMALLINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_counterparties_counterparty_types
+                    references: counterparty_types(id)
+        - createTable:
+            tableName: units
+            columns:
+              - column:
+                  name: id
+                  type: SMALLINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: payments
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: counterparty_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_counterparties_payments
+                    references: counterparties(id)
+              - column:
+                  name: number
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sum
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: materials
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: unit_id
+                  type: SMALLINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_materials_units
+                    references: units(id)
+              - column:
+                  name: price
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: width
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: height
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: depth
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: stocks
+            columns:
+              - column:
+                  name: id
+                  type: SMALLINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_stocks_addresses
+                    references: addresses(id)
+        - createTable:
+            tableName: stocks_materials
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: stock_id
+                  type: SMALLINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_stocks_materials_stocks
+                    references: stocks(id)
+              - column:
+                  name: material_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_stocks_materials_materials
+                    references: materials(id)
+              - column:
+                  name: count
+                  type: INT
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: supplies
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: counterparty_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_counterparties_payments
+                    references: counterparties(id)
+              - column:
+                  name: stock_material_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_supplies_stocks_materials
+                    references: stocks_materials(id)
+              - column:
+                  name: count
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sum
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: accounts
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: buyer_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_account_buyer_counterparty
+                    references: counterparties(id)
+              - column:
+                  name: receiver_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_account_receiver_counterparty
+                    references: counterparties(id)
+              - column:
+                  name: count
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: discount
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: number
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: stock_material_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_stocks_materials_accounts
+                    references: stocks_materials(id)
