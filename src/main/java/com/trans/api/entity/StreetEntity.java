@@ -1,11 +1,16 @@
 package com.trans.api.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "streets")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class StreetEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

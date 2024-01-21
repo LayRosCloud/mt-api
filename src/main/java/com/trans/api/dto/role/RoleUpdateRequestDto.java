@@ -1,9 +1,13 @@
 package com.trans.api.dto.role;
 
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class RoleUpdateRequestDto {
-    private Short id;
-    private String name;
+    Short id;
+    String name;
 }

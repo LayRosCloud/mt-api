@@ -4,8 +4,8 @@ import com.trans.api.scripts.exception.BadRequestException;
 import com.trans.api.scripts.exception.NotFoundException;
 
 public class ThrowableHelper {
-    public static NotFoundException throwNotFoundException(Long id){
-        return throwNotFoundException("Error! Object with id '%d' is not founded", id);
+    public static NotFoundException throwNotFoundException(String id){
+        return throwNotFoundException("Error! Object with id '%s' is not founded", id);
     }
 
     public static NotFoundException throwNotFoundException(String message, Object ...args){
