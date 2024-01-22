@@ -12,6 +12,7 @@ import com.trans.api.repository.AddressRepository;
 import com.trans.api.repository.CityStreetRepository;
 import com.trans.api.scripts.helpers.ThrowableHelper;
 import com.trans.api.service.AddressService;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -42,6 +43,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
+    @Transactional
     public AddressResponseDto create(AddressCreateRequestDto dto) {
         CityStreetEntity cityStreet = cityStreetRepository.findById(dto.getCityStreetId()).orElseThrow(()->
                 ThrowableHelper.throwNotFoundException(String.valueOf(dto.getCityStreetId()))
@@ -60,6 +62,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
+    @Transactional
     public AddressResponseDto update(AddressUpdateRequestDto dto) {
         AddressEntity address = getAddressOrThrowNotFoundException(dto.getId());
         CityStreetEntity cityStreet = cityStreetRepository.findById(dto.getCityStreetId()).orElseThrow(()->
@@ -77,6 +80,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
+    @Transactional
     public AckDto delete(Long id) {
         AddressEntity address = getAddressOrThrowNotFoundException(id);
 

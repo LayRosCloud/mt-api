@@ -9,6 +9,7 @@ import com.trans.api.mapper.CounterpartyTypeMapper;
 import com.trans.api.repository.CounterpartyTypeRepository;
 import com.trans.api.scripts.helpers.ThrowableHelper;
 import com.trans.api.service.CounterpartyTypeService;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -36,6 +37,7 @@ public class CounterpartyTypeServiceImpl implements CounterpartyTypeService {
     }
 
     @Override
+    @Transactional
     public CounterpartyTypeResponseDto create(CounterpartyTypeCreateRequestDto dto) {
         CounterpartyTypeEntity type = CounterpartyTypeEntity.builder()
                 .name(dto.getName())
@@ -47,6 +49,7 @@ public class CounterpartyTypeServiceImpl implements CounterpartyTypeService {
     }
 
     @Override
+    @Transactional
     public CounterpartyTypeResponseDto update(CounterpartyTypeUpdateRequestDto dto) {
         CounterpartyTypeEntity type = getTypeOrThrowNotFoundException(dto.getId());
 
@@ -58,6 +61,7 @@ public class CounterpartyTypeServiceImpl implements CounterpartyTypeService {
     }
 
     @Override
+    @Transactional
     public AckDto delete(Short id) {
         CounterpartyTypeEntity type = getTypeOrThrowNotFoundException(id);
 

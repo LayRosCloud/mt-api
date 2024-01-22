@@ -9,6 +9,7 @@ import com.trans.api.mapper.UnitMapper;
 import com.trans.api.repository.UnitRepository;
 import com.trans.api.scripts.helpers.ThrowableHelper;
 import com.trans.api.service.UnitService;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -36,6 +37,7 @@ public class UnitServiceImpl implements UnitService {
     }
 
     @Override
+    @Transactional
     public UnitResponseDto create(UnitCreateRequestDto dto) {
         UnitEntity unit = UnitEntity.builder()
                 .name(dto.getName())
@@ -45,6 +47,7 @@ public class UnitServiceImpl implements UnitService {
     }
 
     @Override
+    @Transactional
     public UnitResponseDto update(UnitUpdateRequestDto dto) {
         UnitEntity unit = getUnitOrThrowNotFoundException(dto.getId());
 
@@ -55,6 +58,7 @@ public class UnitServiceImpl implements UnitService {
     }
 
     @Override
+    @Transactional
     public AckDto delete(Short id) {
         UnitEntity unit = getUnitOrThrowNotFoundException(id);
 

@@ -11,6 +11,7 @@ import com.trans.api.repository.CountryRepository;
 import com.trans.api.repository.RegionRepository;
 import com.trans.api.scripts.helpers.ThrowableHelper;
 import com.trans.api.service.RegionService;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -40,6 +41,7 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
+    @Transactional
     public RegionResponseDto create(RegionCreateRequestDto dto) {
         CountryEntity country = countryRepository.findById(dto.getCountryId()).orElseThrow(() ->
                 ThrowableHelper.throwNotFoundException(String.valueOf(dto.getCountryId()))
@@ -56,6 +58,7 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
+    @Transactional
     public RegionResponseDto update(RegionUpdateRequestDto dto) {
         RegionEntity region = getRegionOrThrowNotFound(dto.getId());
         CountryEntity country = countryRepository.findById(dto.getCountryId()).orElseThrow(() ->
@@ -70,11 +73,12 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
+    @Transactional
     public AckDto delete(Integer id) {
         RegionEntity region = getRegionOrThrowNotFound(id);
 
-        regionRepository.delete(region)
-        ;
+        regionRepository.delete(region);
+
         return AckDto.builder().answer(true).build();
     }
 

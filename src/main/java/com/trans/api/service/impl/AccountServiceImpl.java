@@ -13,6 +13,7 @@ import com.trans.api.repository.CounterpartyRepository;
 import com.trans.api.repository.StockMaterialRepository;
 import com.trans.api.scripts.helpers.ThrowableHelper;
 import com.trans.api.service.AccountService;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -42,6 +43,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public AccountResponseDto create(AccountCreateRequestDto dto) {
         CounterpartyEntity buyer = counterpartyRepository.findById(dto.getBuyerId()).orElseThrow(()->
                 ThrowableHelper.throwNotFoundException(String.valueOf(dto.getBuyerId()))
@@ -71,6 +73,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public AccountResponseDto update(AccountUpdateRequestDto dto) {
         AccountEntity account = getAccountOrThrowNotFoundException(dto.getId());
 
@@ -102,6 +105,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public AckDto delete(Long id) {
         AccountEntity account = getAccountOrThrowNotFoundException(id);
 

@@ -19,6 +19,12 @@ public class CityStreetEntity {
     @Column(name = "index", nullable = false)
     private String index;
 
+    @Column(name = "city_id", nullable = false, updatable = false, insertable = false)
+    private Integer cityId;
+
+    @Column(name = "street_id", nullable = false, updatable = false, insertable = false)
+    private Integer streetId;
+
     @ManyToOne
     @JoinColumn(name = "city_id", nullable = false)
     private CityEntity city;

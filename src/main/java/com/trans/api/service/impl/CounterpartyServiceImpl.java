@@ -15,6 +15,7 @@ import com.trans.api.repository.CounterpartyRepository;
 import com.trans.api.repository.CounterpartyTypeRepository;
 import com.trans.api.scripts.helpers.ThrowableHelper;
 import com.trans.api.service.CounterpartyService;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -47,6 +48,7 @@ public class CounterpartyServiceImpl implements CounterpartyService {
     }
 
     @Override
+    @Transactional
     public CounterpartyResponseDto create(CounterpartyCreateRequestDto dto) {
         AddressEntity address = addressRepository.findById(dto.getAddressId()).orElseThrow(() ->
                 ThrowableHelper.throwNotFoundException(String.valueOf(dto.getAddressId()))
@@ -83,6 +85,7 @@ public class CounterpartyServiceImpl implements CounterpartyService {
     }
 
     @Override
+    @Transactional
     public CounterpartyResponseDto update(CounterpartyUpdateRequestDto dto) {
         CounterpartyEntity counterparty = getCounterpartyOrThrowNotFoundException(dto.getId());
 
@@ -119,6 +122,7 @@ public class CounterpartyServiceImpl implements CounterpartyService {
     }
 
     @Override
+    @Transactional
     public AckDto delete(Long id) {
         CounterpartyEntity counterparty = getCounterpartyOrThrowNotFoundException(id);
 

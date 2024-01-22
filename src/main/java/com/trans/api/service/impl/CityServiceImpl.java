@@ -11,6 +11,7 @@ import com.trans.api.repository.AreaRepository;
 import com.trans.api.repository.CityRepository;
 import com.trans.api.scripts.helpers.ThrowableHelper;
 import com.trans.api.service.CityService;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -40,6 +41,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
+    @Transactional
     public CityResponseDto create(CityCreateRequestDto dto) {
         AreaEntity area = areaRepository.findById(dto.getAreaId()).orElseThrow(()->
                 ThrowableHelper.throwNotFoundException(String.valueOf(dto.getAreaId()))
@@ -56,6 +58,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
+    @Transactional
     public CityResponseDto update(CityUpdateRequestDto dto) {
         CityEntity city = getCityOrThrowNotFoundException(dto.getId());
 
@@ -72,6 +75,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
+    @Transactional
     public AckDto delete(Integer id) {
         CityEntity city = getCityOrThrowNotFoundException(id);
 

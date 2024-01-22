@@ -11,6 +11,7 @@ import com.trans.api.repository.AreaRepository;
 import com.trans.api.repository.RegionRepository;
 import com.trans.api.scripts.helpers.ThrowableHelper;
 import com.trans.api.service.AreaService;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -41,6 +42,7 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
+    @Transactional
     public AreaResponseDto create(AreaCreateRequestDto dto) {
         RegionEntity region = regionRepository.findById(dto.getRegionId()).orElseThrow(()->
                 ThrowableHelper.throwNotFoundException(String.valueOf(dto.getRegionId()))
@@ -56,6 +58,7 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
+    @Transactional
     public AreaResponseDto update(AreaUpdateRequestDto dto) {
         AreaEntity area = getAreaOrThrowNotFoundException(dto.getId());
 
@@ -71,6 +74,7 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
+    @Transactional
     public AckDto delete(Integer id) {
         AreaEntity area = getAreaOrThrowNotFoundException(id);
 

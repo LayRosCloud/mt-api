@@ -40,7 +40,7 @@ public class StockMaterialServiceImpl implements StockMaterialService {
         if(stockId == 0){
             stocks.addAll(stockMaterialRepository.findAll());
         }else{
-            stocks.addAll(stockMaterialRepository.findByStockId(stockId));
+            stocks.addAll(stockMaterialRepository.findAllByStockId(stockId));
         }
 
         return mapper.toListDto(stocks);
@@ -101,6 +101,7 @@ public class StockMaterialServiceImpl implements StockMaterialService {
     }
 
     @Override
+    @Transactional
     public AckDto delete(Integer id) {
         StockMaterialEntity stockMaterial = getStockMaterialOrThrowNotFoundException(id);
 
