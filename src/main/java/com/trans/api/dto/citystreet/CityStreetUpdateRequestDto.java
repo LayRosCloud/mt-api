@@ -9,7 +9,5 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CityStreetUpdateRequestDto {
     Integer id;
-    Integer cityId;
-    Integer streetId;
     String index;
 }

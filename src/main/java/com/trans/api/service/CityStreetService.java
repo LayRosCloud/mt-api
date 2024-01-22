@@ -10,7 +10,7 @@ import java.util.List;
 public interface CityStreetService {
     List<CityStreetResponseDto> findAll(Integer cityId);
     CityStreetResponseDto findByCityIdAndStreetId(Integer cityId, Integer streetId);
-    CityStreetResponseDto create(CityStreetCreateRequestDto dto);
-    CityStreetResponseDto update(CityStreetUpdateRequestDto dto);
-    AckDto delete(Integer id);
+    CityStreetResponseDto create(Integer cityId, Integer streetId, CityStreetCreateRequestDto dto);
+    CityStreetResponseDto update(Integer cityId, Integer streetId, CityStreetUpdateRequestDto dto);
+    AckDto delete(Integer cityId, Integer streetId);
 }

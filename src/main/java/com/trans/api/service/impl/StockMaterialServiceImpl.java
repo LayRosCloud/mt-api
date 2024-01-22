@@ -48,23 +48,20 @@ public class StockMaterialServiceImpl implements StockMaterialService {
 
     @Override
     public StockMaterialResponseDto findByStockIdAndMaterialId(Short stockId, Integer materialId) {
-        StockMaterialEntity stockMaterial = stockMaterialRepository
-                .findByStockIdAndMaterialId(stockId, materialId).orElseThrow(()->
-                ThrowableHelper.throwNotFoundException(stockId + " " + materialId)
-        );
+        StockMaterialEntity stockMaterial = getStockMaterialOrThrowNotFoundException(stockId, materialId);
         return mapper.toDto(stockMaterial);
     }
 
     @Override
     @Transactional
-    public StockMaterialResponseDto create(StockMaterialCreateRequestDto dto) {
+    public StockMaterialResponseDto create(Short stockId, Integer materialId, StockMaterialCreateRequestDto dto) {
 
-        MaterialEntity material = materialRepository.findById(dto.getMaterialId()).orElseThrow(()->
-                ThrowableHelper.throwNotFoundException(String.valueOf(dto.getMaterialId()))
+        MaterialEntity material = materialRepository.findById(materialId).orElseThrow(()->
+                ThrowableHelper.throwNotFoundException(String.valueOf(stockId))
         );
 
-        StockEntity stock = stockRepository.findById(dto.getStockId()).orElseThrow(()->
-                ThrowableHelper.throwNotFoundException(String.valueOf(dto.getStockId()))
+        StockEntity stock = stockRepository.findById(stockId).orElseThrow(()->
+                ThrowableHelper.throwNotFoundException(String.valueOf(materialId))
         );
 
         StockMaterialEntity entity = StockMaterialEntity.builder()
@@ -80,15 +77,17 @@ public class StockMaterialServiceImpl implements StockMaterialService {
 
     @Override
     @Transactional
-    public StockMaterialResponseDto update(StockMaterialUpdateRequestDto dto) {
-        StockMaterialEntity entity = getStockMaterialOrThrowNotFoundException(dto.getId());
-
-        MaterialEntity material = materialRepository.findById(dto.getMaterialId()).orElseThrow(()->
-                ThrowableHelper.throwNotFoundException(String.valueOf(dto.getMaterialId()))
+    public StockMaterialResponseDto update(Short stockId, Integer materialId,StockMaterialUpdateRequestDto dto) {
+        StockMaterialEntity entity = stockMaterialRepository.findById(dto.getId()).orElseThrow(()->
+                ThrowableHelper.throwNotFoundException(String.valueOf(dto.getId()))
         );
 
-        StockEntity stock = stockRepository.findById(dto.getStockId()).orElseThrow(()->
-                ThrowableHelper.throwNotFoundException(String.valueOf(dto.getStockId()))
+        MaterialEntity material = materialRepository.findById(materialId).orElseThrow(()->
+                ThrowableHelper.throwNotFoundException(String.valueOf(materialId))
+        );
+
+        StockEntity stock = stockRepository.findById(stockId).orElseThrow(()->
+                ThrowableHelper.throwNotFoundException(String.valueOf(stockId))
         );
 
         entity.setMaterial(material);
@@ -102,17 +101,17 @@ public class StockMaterialServiceImpl implements StockMaterialService {
 
     @Override
     @Transactional
-    public AckDto delete(Integer id) {
-        StockMaterialEntity stockMaterial = getStockMaterialOrThrowNotFoundException(id);
+    public AckDto delete(Short stockId, Integer materialId) {
+        StockMaterialEntity stockMaterial = getStockMaterialOrThrowNotFoundException(stockId, materialId);
 
         stockMaterialRepository.delete(stockMaterial);
 
         return AckDto.builder().answer(true).build();
     }
 
-    private StockMaterialEntity getStockMaterialOrThrowNotFoundException(Integer id){
-        return stockMaterialRepository.findById(id).orElseThrow(()->
-                        ThrowableHelper.throwNotFoundException(String.valueOf(id))
-                );
+    private StockMaterialEntity getStockMaterialOrThrowNotFoundException(Short stockId, Integer materialId){
+        return stockMaterialRepository.findByStockIdAndMaterialId(stockId, materialId).orElseThrow(()->
+                ThrowableHelper.throwNotFoundException(stockId + " " + materialId)
+        );
     }
 }

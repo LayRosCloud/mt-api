@@ -7,7 +7,5 @@ import lombok.experimental.FieldDefaults;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CityStreetCreateRequestDto {
-    Integer cityId;
-    Integer streetId;
     String index;
 }

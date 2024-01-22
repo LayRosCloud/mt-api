@@ -10,7 +10,7 @@ import java.util.List;
 public interface StockMaterialService {
     List<StockMaterialResponseDto> findAll(Short id);
     StockMaterialResponseDto findByStockIdAndMaterialId(Short stockId, Integer materialId);
-    StockMaterialResponseDto create(StockMaterialCreateRequestDto dto);
-    StockMaterialResponseDto update(StockMaterialUpdateRequestDto dto);
-    AckDto delete(Integer id);
+    StockMaterialResponseDto create(Short stockId, Integer materialId, StockMaterialCreateRequestDto dto);
+    StockMaterialResponseDto update(Short stockId, Integer materialId, StockMaterialUpdateRequestDto dto);
+    AckDto delete(Short stockId, Integer materialId);
 }

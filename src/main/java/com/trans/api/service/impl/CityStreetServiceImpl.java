@@ -47,13 +47,13 @@ public class CityStreetServiceImpl implements CityStreetService {
 
     @Override
     @Transactional
-    public CityStreetResponseDto create(CityStreetCreateRequestDto dto) {
-        CityEntity city = cityRepository.findById(dto.getCityId()).orElseThrow(()->
-                ThrowableHelper.throwNotFoundException(String.valueOf(dto.getCityId()))
+    public CityStreetResponseDto create(Integer cityId, Integer streetId, CityStreetCreateRequestDto dto) {
+        CityEntity city = cityRepository.findById(cityId).orElseThrow(()->
+                ThrowableHelper.throwNotFoundException(String.valueOf(cityId))
         );
 
-        StreetEntity street = streetRepository.findById(dto.getStreetId()).orElseThrow(()->
-                ThrowableHelper.throwNotFoundException(String.valueOf(dto.getStreetId()))
+        StreetEntity street = streetRepository.findById(streetId).orElseThrow(()->
+                ThrowableHelper.throwNotFoundException(String.valueOf(streetId))
         );
 
         CityStreetEntity cityStreet = CityStreetEntity.builder()
@@ -69,15 +69,17 @@ public class CityStreetServiceImpl implements CityStreetService {
 
     @Override
     @Transactional
-    public CityStreetResponseDto update(CityStreetUpdateRequestDto dto) {
-        CityStreetEntity cityStreet = getCityStreetOrThrowNotFoundException(dto.getId());
+    public CityStreetResponseDto update(Integer cityId, Integer streetId, CityStreetUpdateRequestDto dto) {
+        CityStreetEntity cityStreet = cityStreetRepository.findById(dto.getId()).orElseThrow(()->
+                    ThrowableHelper.throwNotFoundException(String.valueOf(dto.getId()))
+                );
 
-        CityEntity city = cityRepository.findById(dto.getCityId()).orElseThrow(()->
-                ThrowableHelper.throwNotFoundException(String.valueOf(dto.getCityId()))
+        CityEntity city = cityRepository.findById(cityId).orElseThrow(()->
+                ThrowableHelper.throwNotFoundException(String.valueOf(cityId))
         );
 
-        StreetEntity street = streetRepository.findById(dto.getStreetId()).orElseThrow(()->
-                ThrowableHelper.throwNotFoundException(String.valueOf(dto.getStreetId()))
+        StreetEntity street = streetRepository.findById(streetId).orElseThrow(()->
+                ThrowableHelper.throwNotFoundException(String.valueOf(streetId))
         );
 
         cityStreet.setCity(city);
@@ -91,17 +93,17 @@ public class CityStreetServiceImpl implements CityStreetService {
 
     @Override
     @Transactional
-    public AckDto delete(Integer id) {
-        CityStreetEntity cityStreet = getCityStreetOrThrowNotFoundException(id);
+    public AckDto delete(Integer cityId, Integer streetId) {
+        CityStreetEntity cityStreet = getCityStreetOrThrowNotFoundException(cityId, streetId);
 
         cityStreetRepository.delete(cityStreet);
 
         return AckDto.builder().answer(true).build();
     }
 
-    private CityStreetEntity getCityStreetOrThrowNotFoundException(Integer id){
-        return cityStreetRepository.findById(id).orElseThrow(()->
-                ThrowableHelper.throwNotFoundException(String.valueOf(id))
+    private CityStreetEntity getCityStreetOrThrowNotFoundException(Integer cityId, Integer streetId){
+        return cityStreetRepository.findByCityIdAndStreetId(cityId, streetId).orElseThrow(()->
+                ThrowableHelper.throwNotFoundException(cityId + " " + streetId)
         );
     }
 }

@@ -1,5 +1,7 @@
 package com.trans.api.dto.area;
 
+import com.trans.api.dto.region.RegionResponseDto;
+import com.trans.api.entity.RegionEntity;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -9,5 +11,5 @@ import lombok.experimental.FieldDefaults;
 public class AreaResponseDto {
     Integer id;
     String name;
-    Integer regionId;
+    RegionResponseDto region;
 }

@@ -8,7 +8,5 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class StockMaterialUpdateRequestDto {
     Integer id;
-    Short stockId;
-    Integer materialId;
     Integer count;
 }
