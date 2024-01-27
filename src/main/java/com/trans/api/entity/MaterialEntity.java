@@ -1,11 +1,16 @@
 package com.trans.api.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "materials")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class MaterialEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

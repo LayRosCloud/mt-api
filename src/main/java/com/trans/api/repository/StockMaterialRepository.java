@@ -4,6 +4,11 @@ import com.trans.api.entity.StockMaterialEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface StockMaterialRepository extends JpaRepository<StockMaterialEntity, Integer> {
+    List<StockMaterialEntity> findAllByStockId(Short stockId);
+    Optional<StockMaterialEntity> findByStockIdAndMaterialId(Short stockId, Integer materialId);
 }

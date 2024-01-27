@@ -1,5 +1,6 @@
 package com.trans.api.service;
 
+import com.trans.api.dto.AckDto;
 import com.trans.api.dto.role.RoleCreateRequestDto;
 import com.trans.api.dto.role.RoleResponseDto;
 import com.trans.api.dto.role.RoleUpdateRequestDto;
@@ -11,5 +12,5 @@ public interface RoleService {
     RoleResponseDto findById(Short id);
     RoleResponseDto create(RoleCreateRequestDto dto);
     RoleResponseDto update(RoleUpdateRequestDto dto);
-    RoleResponseDto delete(Short id);
+    AckDto delete(Short id);
 }

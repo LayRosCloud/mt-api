@@ -1,13 +1,18 @@
 package com.trans.api.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "payments")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class PaymentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +26,8 @@ public class PaymentEntity {
 
     @Column(name = "sum", nullable = false)
     private Double sum;
+
+    @ManyToOne
+    @JoinColumn(name = "counterparty_id", nullable = false)
+    private CounterpartyEntity counterparty;
 }
