@@ -2,6 +2,7 @@ package com.trans.api.controller;
 
 import com.trans.api.dto.AckDto;
 import com.trans.api.dto.user.UserCreateRequestDto;
+import com.trans.api.dto.user.UserLoginDto;
 import com.trans.api.dto.user.UserResponseDto;
 import com.trans.api.dto.user.UserUpdateRequestDto;
 import com.trans.api.service.UserService;
@@ -24,6 +25,10 @@ public class UserController {
     @GetMapping
     public List<UserResponseDto> findAll(){
         return service.findAll();
+    }
+    @PostMapping("/login")
+    public UserResponseDto login(@RequestBody UserLoginDto dto){
+        return service.login(dto);
     }
 
     @GetMapping(GET_BY_ID)
