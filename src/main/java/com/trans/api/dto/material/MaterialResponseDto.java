@@ -15,5 +15,5 @@ public class MaterialResponseDto {
     Double width;
     Double height;
     Double depth;
-    UnitResponseDto dto;
+    UnitResponseDto unit;
 }
