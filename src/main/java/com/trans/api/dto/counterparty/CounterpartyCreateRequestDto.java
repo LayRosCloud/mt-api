@@ -7,7 +7,6 @@ import lombok.experimental.FieldDefaults;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CounterpartyCreateRequestDto {
-    Long id;
     Long addressId;
     String inn;
     String kpp;
