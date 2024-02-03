@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/changes/init-tables-0.1.yml
+  - include:
+      file: db/changelog/changes/fixed-column-size.yaml

@@ -5,6 +5,9 @@ import com.trans.api.dto.stockmaterial.StockMaterialCreateRequestDto;
 import com.trans.api.dto.stockmaterial.StockMaterialResponseDto;
 import com.trans.api.dto.stockmaterial.StockMaterialUpdateRequestDto;
 import com.trans.api.service.StockMaterialService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +15,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "stocks/{stockId}/materials")
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@RequiredArgsConstructor
 public class StockMaterialController {
     StockMaterialService service;
 

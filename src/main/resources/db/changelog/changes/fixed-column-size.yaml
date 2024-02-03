@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: modifyDataType-size
+      author: betrayal
+      changes:
+        - modifyDataType:
+            columnName: inn
+            newDataType: VARCHAR(12)
+            tableName: counterparties

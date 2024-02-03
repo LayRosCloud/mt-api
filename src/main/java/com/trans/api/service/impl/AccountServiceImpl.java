@@ -65,6 +65,7 @@ public class AccountServiceImpl implements AccountService {
                 .number(dto.getNumber())
                 .stockMaterial(stockMaterial)
                 .number(dto.getNumber())
+                .count(dto.getCount())
                 .build();
 
         AccountEntity result = accountRepository.saveAndFlush(account);
